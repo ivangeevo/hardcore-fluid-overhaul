@@ -94,7 +94,7 @@ public abstract class BucketItemMixin extends Item implements FluidModificationI
                 // Continue with original logic if not flowing water
                 if (blockState.getBlock() instanceof FluidDrainable fluidDrainable)
                 {
-                    ItemStack drainedStack = fluidDrainable.tryDrainFluid(world, blockPos, blockState);
+                    ItemStack drainedStack = fluidDrainable.tryDrainFluid(user, world, blockPos, blockState);
 
                     if (!drainedStack.isEmpty())
                     {
@@ -151,7 +151,7 @@ public abstract class BucketItemMixin extends Item implements FluidModificationI
         BlockState blockState = world.getBlockState(pos);
         Block block = blockState.getBlock();
         boolean bl = blockState.canBucketPlace(this.fluid);
-        boolean bl3 = bl2 = blockState.isAir() || bl || block instanceof FluidFillable && ((FluidFillable) block).canFillWithFluid(world, pos, blockState, this.fluid);
+        boolean bl3 = bl2 = blockState.isAir() || bl || block instanceof FluidFillable && ((FluidFillable) block).canFillWithFluid(player, world, pos, blockState, this.fluid);
         if (!bl2)
         {
             cir.setReturnValue(hitResult != null && this.placeFluid(player, world, hitResult.getBlockPos().offset(hitResult.getSide()), null));
