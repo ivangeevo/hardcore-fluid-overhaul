@@ -18,7 +18,7 @@ public class MiscUtils
     private static final FluidState regularFlowingState = Fluids.FLOWING_WATER.getFlowing(7, false);
     private static final FluidState lowFlowingState = Fluids.FLOWING_WATER.getFlowing(2, false);
 
-    public static void placeNonPersistentWater(WorldAccess world, BlockPos pos)
+    public static void placeNonPersistentWater(World world, BlockPos pos)
     {
         if (canWaterDisplaceBlock(world, pos))
         {
@@ -33,11 +33,12 @@ public class MiscUtils
                 onFluidFlowIntoBlock(world, pos, currentState);
             }
             world.setBlockState(pos, regularFlowingState.getBlockState(), Block.NOTIFY_ALL | Block.REDRAW_ON_MAIN_THREAD);
+            world.updateNeighbor(pos, regularFlowingState.getBlockState().getBlock(), pos);
             spreadWaterIfNeeded(world, pos);
         }
     }
 
-    private static void spreadWaterIfNeeded(WorldAccess world, BlockPos pos) {
+    private static void spreadWaterIfNeeded(World world, BlockPos pos) {
         flowWaterIntoBlockIfPossible(world, pos.add(1, 0, 0), lowFlowingState.getBlockState());
         flowWaterIntoBlockIfPossible(world, pos.add(-1, 0, 0), lowFlowingState.getBlockState());
         flowWaterIntoBlockIfPossible(world, pos.add(0, 0, 1), lowFlowingState.getBlockState());
@@ -45,13 +46,14 @@ public class MiscUtils
     }
 
 
-    static public void flowWaterIntoBlockIfPossible(WorldAccess world, BlockPos pos, BlockState state) {
+    static public void flowWaterIntoBlockIfPossible(World world, BlockPos pos, BlockState state) {
         // Check if the block at pos can be replaced by water
         if (canWaterDisplaceBlock(world, pos)) {
             // Get the current state to drop it later
             BlockState currentState = world.getBlockState(pos);
             // Set the water block state
             world.setBlockState(pos, regularFlowingState.getBlockState(), 1);
+            world.updateNeighbor(pos, regularFlowingState.getBlockState().getBlock(), pos);
             // Drop the current block state
             if (currentState.getBlock() != null) {
                 onFluidFlowIntoBlock(world, pos, currentState);
@@ -71,9 +73,17 @@ public class MiscUtils
         return !state.isIn(BlockTags.PORTALS) && state.isReplaceable();
     }
 
-    public static void onFluidFlowIntoBlock(WorldAccess world, BlockPos pos, BlockState state) {
+    public static void onFluidFlowIntoBlock(World world, BlockPos pos, BlockState state) {
         // Drop the block state if it exists
         ItemStack blockStack = state.getBlock().asItem().getDefaultStack();
-        Block.dropStack((World) world, pos, blockStack);
+
+        if (state.isReplaceable())
+        {
+            Block.dropStacks(state, world, pos );
+        }
+        else
+        {
+            Block.dropStack(world, pos, blockStack);
+        }
     }
 }
