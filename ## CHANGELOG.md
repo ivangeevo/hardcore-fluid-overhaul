@@ -1,3 +1,6 @@
+### next
++ Fixed the mod icon to show in the mod list and fixed it's display name ("hardcore-fluid-overhaul" to "Hardcore Fluid Overhaul")
++ Added mod description to show in the mod list
 
 ### v1.1
 + Added logic to make waterlogged blocks & Ice block to dissipate the water block they hold after being broken

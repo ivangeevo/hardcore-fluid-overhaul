@@ -2,8 +2,8 @@
   "schemaVersion": 1,
   "id": "hardcore-fluid-overhaul",
   "version": "${version}",
-  "name": "hardcore-fluid-overhaul",
-  "description": "",
+  "name": "Hardcore Fluid Overhaul",
+  "description": "Changing Minecraft fluid handling to be semi-realistic and push for more creative usages.",
   "authors": [],
   "contact": {
     "repo": "https://github.com/ivangeevo/hardcore-fluid-overhaul"
