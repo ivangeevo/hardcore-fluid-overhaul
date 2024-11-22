@@ -1,4 +1,4 @@
-### next
+### v1.1.1
 + Fixed the mod icon to show in the mod list and fixed it's display name ("hardcore-fluid-overhaul" to "Hardcore Fluid Overhaul")
 + Added mod description to show in the mod list
 
