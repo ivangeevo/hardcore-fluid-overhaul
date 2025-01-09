@@ -1,4 +1,4 @@
-### v1.2 (next)
+### v1.2
 + Changed the mod so that the hardcore fluid logic will only apply if the player is not in creative mode/
 This in turn allows normal use of the fluids in creative, which weren't available before this change.
 + Changed using the bucket on water to not take source blocks.
