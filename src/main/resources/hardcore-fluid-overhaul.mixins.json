@@ -6,6 +6,7 @@
   "mixins": [
     "BlockMixin",
     "BucketItemMixin",
+    "FluidBlockMixin",
     "IceBlockMixin"
   ],
   "client": [

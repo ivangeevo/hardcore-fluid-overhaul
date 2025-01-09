@@ -22,23 +22,28 @@ public class IceBlockMixin
     @Unique private static final BlockState regularFlowingState = Fluids.FLOWING_WATER.getFlowing(7, false).getBlockState();
 
 
-    @Inject(method = "afterBreak", at = @At(value = "INVOKE",
-            target = "Lnet/minecraft/world/World;getBlockState(Lnet/minecraft/util/math/BlockPos;)Lnet/minecraft/block/BlockState;"), cancellable = true)
+    //@Inject(method = "afterBreak", at = @At(value = "INVOKE",
+    //target = "Lnet/minecraft/world/World;getBlockState(Lnet/minecraft/util/math/BlockPos;)Lnet/minecraft/block/BlockState;"), cancellable = true)
     private void onAfterBreak(World world, PlayerEntity player, BlockPos pos, BlockState state, BlockEntity blockEntity, ItemStack tool, CallbackInfo ci)
     {
-        BlockState blockState = world.getBlockState(pos.down());
-        if (blockState.blocksMovement() || blockState.isLiquid()) {
-            world.setBlockState(pos, regularFlowingState);
-            MiscUtils.placeNonPersistentWater(world, pos);
+        // TODO: FIX-NOT WORKING, ALWAYS BREAKS TO NON PERSISTENT WATER :(
+        // Ensure this method executes only if broken by a player
+        if (player instanceof PlayerEntity) {
+            BlockState blockState = world.getBlockState(pos.down());
+            if (blockState.blocksMovement() || blockState.isLiquid()) {
+                world.setBlockState(pos, regularFlowingState);
+                MiscUtils.placeNonPersistentWater(world, pos);
+            }
+
+            ci.cancel();
         }
-
-        ci.cancel();
-
     }
 
 
-    @Inject(method = "melt", at = @At(value = "INVOKE",
-            target = "Lnet/minecraft/block/IceBlock;getMeltedState()Lnet/minecraft/block/BlockState;", ordinal = 0), cancellable = true)
+
+
+    //@Inject(method = "melt", at = @At(value = "INVOKE",
+            //target = "Lnet/minecraft/block/IceBlock;getMeltedState()Lnet/minecraft/block/BlockState;", ordinal = 0), cancellable = true)
     private void onMelt(BlockState state, World world, BlockPos pos, CallbackInfo ci)
     {
         world.setBlockState(pos, regularFlowingState);

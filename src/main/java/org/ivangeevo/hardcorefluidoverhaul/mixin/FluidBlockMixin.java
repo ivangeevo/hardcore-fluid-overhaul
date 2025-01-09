@@ -5,6 +5,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.FluidBlock;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.FlowableFluid;
 import net.minecraft.item.ItemStack;
 import net.minecraft.state.property.IntProperty;
@@ -23,17 +24,13 @@ public abstract class FluidBlockMixin
     @Shadow @Final protected FlowableFluid fluid;
     @Shadow @Final public static IntProperty LEVEL;
 
-    // TODO:  Make it so that the bucket doesn't take source blocks when trying to replace(aka it shouldn't).
-    // this right here for some reason when injected doesn't allow the bucket to change to the new itemstack (filled)
-    // @Inject(method = "tryDrainFluid", at = @At("HEAD"), cancellable = true)
-    private void onTryDrainFluid(WorldAccess world, BlockPos pos, BlockState state, CallbackInfoReturnable<ItemStack> cir)
+    @Inject(method = "tryDrainFluid", at = @At("HEAD"), cancellable = true)
+    private void onTryDrainFluid(PlayerEntity player, WorldAccess world, BlockPos pos, BlockState state, CallbackInfoReturnable<ItemStack> cir)
     {
-        if (state.get(LEVEL) == 0)
-        {
-            world.setBlockState(pos, Blocks.AIR.getDefaultState(), Block.NOTIFY_ALL | Block.REDRAW_ON_MAIN_THREAD);
-            cir.setReturnValue( new ItemStack(this.fluid.getBucketItem()) );
+        if (player.isCreative()) {
+            return;
         }
-        cir.setReturnValue( ItemStack.EMPTY );
 
+        cir.setReturnValue( new ItemStack(this.fluid.getBucketItem()) );
     }
 }

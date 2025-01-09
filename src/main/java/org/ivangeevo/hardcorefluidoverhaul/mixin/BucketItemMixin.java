@@ -50,6 +50,10 @@ public abstract class BucketItemMixin extends Item implements FluidModificationI
     @Inject(method = "use", at = @At("HEAD"), cancellable = true)
     private void onUse(World world, PlayerEntity user, Hand hand, CallbackInfoReturnable<TypedActionResult<ItemStack>> cir)
     {
+        if (user.isCreative()) {
+            return;
+        }
+
         ItemStack itemStack = user.getStackInHand(hand);
         BlockHitResult blockHitResult = BucketItem.raycast(world, user, this.fluid == Fluids.EMPTY
                 ? RaycastContext.FluidHandling.SOURCE_ONLY : RaycastContext.FluidHandling.NONE);
@@ -142,6 +146,10 @@ public abstract class BucketItemMixin extends Item implements FluidModificationI
 
     @Inject(method = "placeFluid", at = @At("HEAD"), cancellable = true)
     private void modifyPlaceFluid(PlayerEntity player, World world, BlockPos pos, BlockHitResult hitResult, CallbackInfoReturnable<Boolean> cir) {
+
+        if (player.isCreative()) {
+            return;
+        }
 
         boolean bl2;
         if (!(this.fluid instanceof FlowableFluid))
