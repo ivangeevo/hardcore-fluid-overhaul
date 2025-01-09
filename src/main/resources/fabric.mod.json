@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "id": "hardcore-fluid-overhaul",
+  "id": "hardcore_fluid_overhaul",
   "version": "${version}",
   "name": "Hardcore Fluid Overhaul",
   "description": "Changing Minecraft fluid handling to be semi-realistic and push for more creative usages.",

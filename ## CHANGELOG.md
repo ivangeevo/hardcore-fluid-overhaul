@@ -1,8 +1,9 @@
 ### v1.2 (next)
 + Changed the mod so that the hardcore fluid logic will only apply if the player is not in creative mode/
-This in turn allows normal use of the fluids, which were not available before this change.
-+ Made using the bucket on water to not take source blocks.
-+ Removed ice blocks dissipating their water if broken by player
+This in turn allows normal use of the fluids in creative, which weren't available before this change.
++ Changed using the bucket on water to not take source blocks.
++ Changed the mod id from "hardcore-fluid-overhaul" to "hardcore_fluid_overhaul".
++ Removed ice blocks from dissipating their water when broken/melted
 + Updated the mod to Fabric API 0.114.0
 
 
