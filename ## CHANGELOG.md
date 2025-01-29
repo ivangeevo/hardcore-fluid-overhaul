@@ -1,3 +1,7 @@
+### v1.3
++ Made it possible to pick up water from flowing water as well as source blocks. (only in survival, in creative only source blocks can be picked up)
++ Fixed a bug where using sponges on water or trying to dispense water from a dispenser would crash the game.
+
 ### v1.2
 + Changed the mod so that the hardcore fluid logic will only apply if the player is not in creative mode/
 This in turn allows normal use of the fluids in creative, which weren't available before this change.

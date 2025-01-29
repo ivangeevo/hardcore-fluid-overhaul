@@ -27,10 +27,15 @@ public abstract class FluidBlockMixin
     @Inject(method = "tryDrainFluid", at = @At("HEAD"), cancellable = true)
     private void onTryDrainFluid(PlayerEntity player, WorldAccess world, BlockPos pos, BlockState state, CallbackInfoReturnable<ItemStack> cir)
     {
-        if (player.isCreative()) {
-            return;
+
+        if (player != null) {
+            if (player.isCreative()) {
+                return;
+            }
+        } else {
+            world.setBlockState(pos, Blocks.AIR.getDefaultState(), Block.NOTIFY_ALL_AND_REDRAW);
         }
 
-        cir.setReturnValue( new ItemStack(this.fluid.getBucketItem()) );
+        cir.setReturnValue(new ItemStack(this.fluid.getBucketItem()));
     }
 }

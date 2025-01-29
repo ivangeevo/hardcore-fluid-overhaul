@@ -55,8 +55,10 @@ public abstract class BucketItemMixin extends Item implements FluidModificationI
         }
 
         ItemStack itemStack = user.getStackInHand(hand);
+        // TODO: Keep in mind that the RaycastContext.FluidHandling has been changed from SOURCE_ONLY to ANY
+        //  in order to allow picking up water for flowing water as well. See if this causes any bugs in the future.
         BlockHitResult blockHitResult = BucketItem.raycast(world, user, this.fluid == Fluids.EMPTY
-                ? RaycastContext.FluidHandling.SOURCE_ONLY : RaycastContext.FluidHandling.NONE);
+                ? RaycastContext.FluidHandling.ANY : RaycastContext.FluidHandling.NONE);
 
         if (blockHitResult.getType() == HitResult.Type.MISS)
         {
@@ -147,7 +149,7 @@ public abstract class BucketItemMixin extends Item implements FluidModificationI
     @Inject(method = "placeFluid", at = @At("HEAD"), cancellable = true)
     private void modifyPlaceFluid(PlayerEntity player, World world, BlockPos pos, BlockHitResult hitResult, CallbackInfoReturnable<Boolean> cir) {
 
-        if (player.isCreative()) {
+        if (player != null && player.isCreative()) {
             return;
         }
 
@@ -194,7 +196,6 @@ public abstract class BucketItemMixin extends Item implements FluidModificationI
             this.playEmptyingSound(player, world, pos);
             cir.setReturnValue(true);
         }
-
         else // Rest of your conditions for other fluids
         {
 
