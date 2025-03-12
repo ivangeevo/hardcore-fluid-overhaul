@@ -1,3 +1,7 @@
+### v1.3.1
++ Reverted a change that allowed to pickup water from flowing water too which cause a bug making it possible to pickup water infinitely
++ Updated the mod to Fabric API 0.115.1 & Fabric Loader 0.16.10
+
 ### v1.3
 + Made it possible to pick up water from flowing water as well as source blocks. (only in survival, in creative only source blocks can be picked up)
 + Fixed a bug where using sponges on water or trying to dispense water from a dispenser would crash the game.

@@ -11,8 +11,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
 
-public class MiscUtils
-{
+public class MiscUtils {
 
     // Fluid states here.
     private static final FluidState regularFlowingState = Fluids.FLOWING_WATER.getFlowing(7, false);
@@ -32,6 +31,7 @@ public class MiscUtils
                 // The current state is not air or water; drop it and then place water
                 onFluidFlowIntoBlock(world, pos, currentState);
             }
+
             world.setBlockState(pos, regularFlowingState.getBlockState(), Block.NOTIFY_ALL | Block.REDRAW_ON_MAIN_THREAD);
             world.updateNeighbor(pos, regularFlowingState.getBlockState().getBlock(), pos);
             spreadWaterIfNeeded(world, pos);

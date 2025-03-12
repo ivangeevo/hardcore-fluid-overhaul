@@ -5,7 +5,6 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.FluidDrainable;
 import net.minecraft.block.FluidFillable;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.FlowableFluid;
 import net.minecraft.fluid.Fluid;
@@ -16,7 +15,6 @@ import net.minecraft.particle.ParticleTypes;
 import net.minecraft.registry.tag.FluidTags;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.sound.SoundCategory;
-import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.stat.Stats;
 import net.minecraft.util.Hand;
@@ -39,7 +37,8 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(BucketItem.class)
-public abstract class BucketItemMixin extends Item implements FluidModificationItem {
+public abstract class BucketItemMixin extends Item implements FluidModificationItem
+{
     @Shadow @Final private Fluid fluid;
     @Shadow protected abstract void playEmptyingSound(@Nullable PlayerEntity player, WorldAccess world, BlockPos pos);
 
@@ -58,7 +57,7 @@ public abstract class BucketItemMixin extends Item implements FluidModificationI
         // TODO: Keep in mind that the RaycastContext.FluidHandling has been changed from SOURCE_ONLY to ANY
         //  in order to allow picking up water for flowing water as well. See if this causes any bugs in the future.
         BlockHitResult blockHitResult = BucketItem.raycast(world, user, this.fluid == Fluids.EMPTY
-                ? RaycastContext.FluidHandling.ANY : RaycastContext.FluidHandling.NONE);
+                ? RaycastContext.FluidHandling.SOURCE_ONLY : RaycastContext.FluidHandling.NONE);
 
         if (blockHitResult.getType() == HitResult.Type.MISS)
         {
@@ -81,11 +80,14 @@ public abstract class BucketItemMixin extends Item implements FluidModificationI
                 BlockState blockState = world.getBlockState(blockPos);
                 FluidState fluidState = blockState.getFluidState();
 
+
+
                 // Check if the block contains flowing water, and return fail if true
                 if (fluidState.isOf(Fluids.FLOWING_WATER))
                 {
                     cir.setReturnValue(TypedActionResult.fail(itemStack));
                 }
+
 
                 // Check if the block contains flowing lava or lava, and handle accordingly
                 if (fluidState.isOf(Fluids.FLOWING_LAVA) || fluidState.isOf(Fluids.LAVA))
@@ -100,13 +102,15 @@ public abstract class BucketItemMixin extends Item implements FluidModificationI
                 // Continue with original logic if not flowing water
                 if (blockState.getBlock() instanceof FluidDrainable fluidDrainable)
                 {
+
+
                     ItemStack drainedStack = fluidDrainable.tryDrainFluid(user, world, blockPos, blockState);
 
                     if (!drainedStack.isEmpty())
                     {
                         user.incrementStat(Stats.USED.getOrCreateStat(this));
-                        fluidDrainable.getBucketFillSound().ifPresent(sound -> user.playSound((SoundEvent) sound, 1.0f, 1.0f));
-                        world.emitGameEvent((Entity) user, GameEvent.FLUID_PICKUP, blockPos);
+                        fluidDrainable.getBucketFillSound().ifPresent(sound -> user.playSound(sound, 1.0f, 1.0f));
+                        world.emitGameEvent(user, GameEvent.FLUID_PICKUP, blockPos);
                         ItemStack exchangedStack = ItemUsage.exchangeStack(itemStack, user, drainedStack);
 
                         if (!world.isClient)
