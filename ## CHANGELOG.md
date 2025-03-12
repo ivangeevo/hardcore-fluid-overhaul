@@ -1,5 +1,5 @@
 ### v1.3.1
-+ Reverted a change that allowed to pickup water from flowing water too which cause a bug making it possible to pickup water infinitely
++ Reverted a change that allowed to pickup water from flowing water too which caused a bug making it possible to pickup water infinitely
 + Updated the mod to Fabric API 0.115.1 & Fabric Loader 0.16.10
 
 ### v1.3
@@ -13,7 +13,6 @@ This in turn allows normal use of the fluids in creative, which weren't availabl
 + Changed the mod id from "hardcore-fluid-overhaul" to "hardcore_fluid_overhaul".
 + Removed ice blocks from dissipating their water when broken/melted
 + Updated the mod to Fabric API 0.114.0
-
 
 ### v1.1.1
 + Fixed the mod icon to show in the mod list and fixed it's display name ("hardcore-fluid-overhaul" to "Hardcore Fluid Overhaul")
