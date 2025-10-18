@@ -1,4 +1,4 @@
-### v1.4(dev)
+### v1.4
 + Added configuration options support with Mod Menu and Cloth Config API and added the following options:
 
 #####  <p>Lava Pickup:
