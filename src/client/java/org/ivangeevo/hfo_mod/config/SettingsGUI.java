@@ -39,25 +39,25 @@ public class SettingsGUI
 
         general.addEntry(entryBuilder
                 .startBooleanToggle(Text.translatable("config.hardcore_fluid_overhaul.waterloggedBlocksDissipate"), settingsCommon.waterloggedBlocksDissipate)
-                .setDefaultValue(false)
+                .setDefaultValue(true)
                 .setSaveConsumer(newValue -> settingsCommon.waterloggedBlocksDissipate = newValue)
                 .setTooltip(Text.translatable("config.hardcore_fluid_overhaul.tooltip.waterloggedBlocksDissipate"))
                 .build()
         );
 
         general.addEntry(entryBuilder
-                .startBooleanToggle(Text.translatable("config.hardcore_fluid_overhaul.iceBreakingToPersistent"), settingsCommon.waterFromIceDissipating)
-                .setDefaultValue(false)
+                .startBooleanToggle(Text.translatable("config.hardcore_fluid_overhaul.waterFromIceDissipating"), settingsCommon.waterFromIceDissipating)
+                .setDefaultValue(true)
                 .setSaveConsumer(newValue -> settingsCommon.waterFromIceDissipating = newValue)
-                .setTooltip(Text.translatable("config.hardcore_fluid_overhaul.tooltip.iceBreakingToPersistent"))
+                .setTooltip(Text.translatable("config.hardcore_fluid_overhaul.tooltip.waterFromIceDissipating"))
                 .build()
         );
 
         general.addEntry(entryBuilder
-                .startBooleanToggle(Text.translatable("config.hardcore_fluid_overhaul.lavaPickupEnabled"), settingsCommon.lavaPickupDisabled)
-                .setDefaultValue(false)
+                .startBooleanToggle(Text.translatable("config.hardcore_fluid_overhaul.lavaPickupDisabled"), settingsCommon.lavaPickupDisabled)
+                .setDefaultValue(true)
                 .setSaveConsumer(newValue -> settingsCommon.lavaPickupDisabled = newValue)
-                .setTooltip(Text.translatable("config.hardcore_fluid_overhaul.tooltip.lavaPickupEnabled"))
+                .setTooltip(Text.translatable("config.hardcore_fluid_overhaul.tooltip.lavaPickupDisabled"))
                 .build()
         );
 
