@@ -4,14 +4,17 @@
 #####  <p>Lava Pickup:
 <p>Allows enabling of whether lava can be picked up with a bucket or harm the player and destroy the bucket(default behavior).
 
-#####  <p>Waterlogging blocks:
-<p>This allows toggling of whether waterlogging blocks is enabled.
+#####  <p>Source Fluid Blocks Pickup:
+<p>Allows toggling if picking up a fluid consumes the source block.
 
 #####  <p>Waterlogging blocks:
-<p>This allows toggling of whether waterlogging blocks is enabled.
+<p>Toggles if waterlogging blocks is enabled.
 
-#####  <p>Persisting water from ice blocks:
-<p>This toggles if breaking ice blocks gives persistent water.
+#####  <p>Dissipating Waterlogged blocks:
+<p>Toggles if waterlogged blocks should dissipate when broken.
+
+#####  <p>Dissipating Ice blocks:
+<p>Toggles if ice block's water should dissipate when broken.
 
 #####  <p>Persistent Water in the End:
 <p>In BTW water in the end can be placed normally, so you can toggle this if you do not want it.
