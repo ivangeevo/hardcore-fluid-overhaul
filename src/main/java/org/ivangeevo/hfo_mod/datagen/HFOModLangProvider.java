@@ -28,7 +28,7 @@ public class HFOModLangProvider extends FabricLanguageProvider {
         addConfig("waterFromIceDissipating", "Dissipating Ice Blocks", tb);
         addConfigTooltip("waterFromIceDissipating", "Toggles whether ice blocks break to dissipating water", tb);
         addConfig("waterPersistentInEnd", "Persistent End Water", tb);
-        addConfigTooltip("waterPersistentInEnd", "Toggles whether water in the end will persist when placed", tb);
+        addConfigTooltip("waterPersistentInEnd", "Toggles whether water in The End will persist when placed", tb);
         addConfig("lavaPickupDisabled", "Disable Lava Pickup", tb);
         addConfigTooltip("lavaPickupDisabled", "Toggles whether picking up lava is disabled", tb);
         addConfig("sourceFluidPickupDisabled", "Disable Source Fluids Pickup", tb);
