@@ -1,22 +1,22 @@
 ### v1.4
 + Added configuration options support with Mod Menu and Cloth Config API and added the following options:
 
-#####  <p>Lava Pickup:
+####  <p>Lava Pickup:
 <p>Allows enabling of whether lava can be picked up with a bucket or harm the player and destroy the bucket(default behavior).
 
-#####  <p>Source Fluid Blocks Pickup:
+####  <p>Source Fluid Blocks Pickup:
 <p>Allows toggling if picking up a fluid consumes the source block.
 
-#####  <p>Waterlogging blocks:
+####  <p>Waterlogging blocks:
 <p>Toggles if waterlogging blocks is enabled.
 
-#####  <p>Dissipating Waterlogged blocks:
+####  <p>Dissipating Waterlogged blocks:
 <p>Toggles if waterlogged blocks should dissipate when broken.
 
-#####  <p>Dissipating Ice blocks:
+####  <p>Dissipating Ice blocks:
 <p>Toggles if ice block's water should dissipate when broken.
 
-#####  <p>Persistent Water in the End:
+####  <p>Persistent Water in the End:
 <p>In BTW water in the end can be placed normally, so you can toggle this if you do not want it.
 
 + Split client side environment code from the main package
