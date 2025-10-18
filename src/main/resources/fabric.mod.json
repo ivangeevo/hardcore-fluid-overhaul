@@ -14,6 +14,7 @@
   "entrypoints": {
     "client": ["org.ivangeevo.hfo_mod.HFOClient"],
     "main": ["org.ivangeevo.hfo_mod.HFOMod"],
+    "fabric-datagen": [ "org.ivangeevo.hfo_mod.HFOModDataGenerator" ],
     "modmenu": ["org.ivangeevo.hfo_mod.config.HFOModMenu"]
   },
   "mixins": [

@@ -85,11 +85,13 @@ public abstract class BucketItemMixin extends Item implements FluidModificationI
 
                 // Check if the block contains flowing lava or lava, and handle accordingly
                 if (fluidState.isOf(Fluids.FLOWING_LAVA) || fluidState.isOf(Fluids.LAVA)) {
-                    cir.setReturnValue(TypedActionResult.fail(itemStack));
-                    itemStack.decrement(1);
-                    user.damage(user.getDamageSources().inFire(), 1.0f); // Using IN_FIRE damage source for lava damage
-                    world.playSound(null, blockPos, SoundEvents.BLOCK_FIRE_EXTINGUISH, SoundCategory.PLAYERS, 0.8f, 1.0f);
-                    return;
+                    if (HFOMod.getInstance().settings.isLavaPickupDisabled()) {
+                        cir.setReturnValue(TypedActionResult.fail(itemStack));
+                        itemStack.decrement(1);
+                        user.damage(user.getDamageSources().inFire(), 1.0f); // Using IN_FIRE damage source for lava damage
+                        world.playSound(null, blockPos, SoundEvents.BLOCK_FIRE_EXTINGUISH, SoundCategory.PLAYERS, 0.8f, 1.0f);
+                        return;
+                    }
                 }
 
                 // Continue with original logic if not flowing water
@@ -195,7 +197,7 @@ public abstract class BucketItemMixin extends Item implements FluidModificationI
     private void tryPlacingOrFillWater(World world, BlockPos pos, BlockState state, Block block) {
         if (world.getDimensionEntry().matchesKey(DimensionTypes.THE_END)) {
             if (!(block instanceof FluidFillable)) {
-                if (HFOMod.getInstance().settings.isPersistentEndWater()) {
+                if (HFOMod.getInstance().settings.isWaterPersistentInEnd()) {
                     if (world.setBlockState(pos, this.fluid.getDefaultState().getBlockState(),
                             Block.NOTIFY_ALL | Block.REDRAW_ON_MAIN_THREAD)) {
                         state.getFluidState().isStill();

@@ -8,10 +8,15 @@ import net.minecraft.fluid.Fluids;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import org.ivangeevo.hfo_mod.HFOMod;
 import org.ivangeevo.hfo_mod.util.MiscUtils;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+
+import static net.minecraft.block.IceBlock.getMeltedState;
 
 @Mixin(IceBlock.class)
 public abstract class IceBlockMixin
@@ -19,22 +24,21 @@ public abstract class IceBlockMixin
 
     @Unique private static final BlockState regularFlowingState = Fluids.FLOWING_WATER.getFlowing(7, false).getBlockState();
 
-
-    //@Inject(method = "afterBreak", at = @At(value = "INVOKE",
-    //target = "Lnet/minecraft/world/World;getBlockState(Lnet/minecraft/util/math/BlockPos;)Lnet/minecraft/block/BlockState;"), cancellable = true)
+    @Inject(method = "afterBreak", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/World;getBlockState(Lnet/minecraft/util/math/BlockPos;)Lnet/minecraft/block/BlockState;"), cancellable = true)
     private void onAfterBreak(World world, PlayerEntity player, BlockPos pos, BlockState state, BlockEntity blockEntity, ItemStack tool, CallbackInfo ci)
     {
-        // TODO: FIX-NOT WORKING, ALWAYS BREAKS TO NON PERSISTENT WATER :(
-        // Ensure this method executes only if broken by a player
-        if (player instanceof PlayerEntity) {
-            BlockState blockState = world.getBlockState(pos.down());
-            if (blockState.blocksMovement() || blockState.isLiquid()) {
+        BlockState blockState = world.getBlockState(pos.down());
+
+        if (blockState.blocksMovement() || blockState.isLiquid()) {
+            if (HFOMod.getInstance().settings.isWaterFromIceDissipating()) {
                 world.setBlockState(pos, regularFlowingState);
                 MiscUtils.placeNonPersistentWater(world, pos);
+            } else {
+                world.setBlockState(pos, getMeltedState());
             }
-
-            ci.cancel();
         }
+
+        ci.cancel();
     }
 
 

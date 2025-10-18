@@ -1,10 +1,20 @@
 ### v1.4(dev)
 + Added configuration options support with Mod Menu and Cloth Config API and added the following options:
-#####  <p>Persistent Water in the End:
-<p>In BTW water in the end can be placed normally, so you can toggle this if you do not want it.
+
+#####  <p>Lava Pickup:
+<p>Allows enabling of whether lava can be picked up with a bucket or harm the player and destroy the bucket(default behavior).
 
 #####  <p>Waterlogging blocks:
 <p>This allows toggling of whether waterlogging blocks is enabled.
+
+#####  <p>Waterlogging blocks:
+<p>This allows toggling of whether waterlogging blocks is enabled.
+
+#####  <p>Persisting water from ice blocks:
+<p>This toggles if breaking ice blocks gives persistent water.
+
+#####  <p>Persistent Water in the End:
+<p>In BTW water in the end can be placed normally, so you can toggle this if you do not want it.
 
 + Split client side environment code from the main package
 + Changed the main and client package directories from "hardcorefluidoverhaul" to "hfo_mod"

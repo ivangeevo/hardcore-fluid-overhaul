@@ -22,16 +22,42 @@ public class SettingsGUI
 
         /** General Category**/
         general.addEntry(entryBuilder
-                        .startBooleanToggle(Text.translatable("config.hardcore_fluid_overhaul.waterloggingEnabled"), settingsCommon.waterloggingEnabled)
-                        .setDefaultValue(true)
-                        .setSaveConsumer(newValue -> settingsCommon.waterloggingEnabled = newValue)
-                        .build()
+                .startBooleanToggle(Text.translatable("config.hardcore_fluid_overhaul.waterloggingEnabled"), settingsCommon.waterloggingEnabled)
+                .setDefaultValue(true)
+                .setSaveConsumer(newValue -> settingsCommon.waterloggingEnabled = newValue)
+                .setTooltip(Text.translatable("config.hardcore_fluid_overhaul.tooltip.waterloggingEnabled"))
+                .build()
         );
 
         general.addEntry(entryBuilder
-                .startBooleanToggle(Text.translatable("config.hardcore_fluid_overhaul.persistentEndWater"), settingsCommon.persistentEndWater)
+                .startBooleanToggle(Text.translatable("config.hardcore_fluid_overhaul.waterPersistentInEnd"), settingsCommon.waterPersistentInEnd)
                 .setDefaultValue(true)
-                .setSaveConsumer(newValue -> settingsCommon.persistentEndWater = newValue)
+                .setSaveConsumer(newValue -> settingsCommon.waterPersistentInEnd = newValue)
+                .setTooltip(Text.translatable("config.hardcore_fluid_overhaul.tooltip.waterPersistentInEnd"))
+                .build()
+        );
+
+        general.addEntry(entryBuilder
+                .startBooleanToggle(Text.translatable("config.hardcore_fluid_overhaul.waterloggedBlocksDissipate"), settingsCommon.waterloggedBlocksDissipate)
+                .setDefaultValue(false)
+                .setSaveConsumer(newValue -> settingsCommon.waterloggedBlocksDissipate = newValue)
+                .setTooltip(Text.translatable("config.hardcore_fluid_overhaul.tooltip.waterloggedBlocksDissipate"))
+                .build()
+        );
+
+        general.addEntry(entryBuilder
+                .startBooleanToggle(Text.translatable("config.hardcore_fluid_overhaul.iceBreakingToPersistent"), settingsCommon.waterFromIceDissipating)
+                .setDefaultValue(false)
+                .setSaveConsumer(newValue -> settingsCommon.waterFromIceDissipating = newValue)
+                .setTooltip(Text.translatable("config.hardcore_fluid_overhaul.tooltip.iceBreakingToPersistent"))
+                .build()
+        );
+
+        general.addEntry(entryBuilder
+                .startBooleanToggle(Text.translatable("config.hardcore_fluid_overhaul.lavaPickupEnabled"), settingsCommon.lavaPickupDisabled)
+                .setDefaultValue(false)
+                .setSaveConsumer(newValue -> settingsCommon.lavaPickupDisabled = newValue)
+                .setTooltip(Text.translatable("config.hardcore_fluid_overhaul.tooltip.lavaPickupEnabled"))
                 .build()
         );
 
