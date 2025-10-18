@@ -31,6 +31,8 @@ public class HFOModLangProvider extends FabricLanguageProvider {
         addConfigTooltip("waterPersistentInEnd", "Toggles whether water in the end will persist when placed", tb);
         addConfig("lavaPickupDisabled", "Disable Lava Pickup", tb);
         addConfigTooltip("lavaPickupDisabled", "Toggles whether picking up lava is disabled", tb);
+        addConfig("sourceFluidPickupDisabled", "Disable Source Fluids Pickup", tb);
+        addConfigTooltip("sourceFluidPickupDisabled", "Toggles whether source fluid blocks pickup is disabled", tb);
 
     }
 

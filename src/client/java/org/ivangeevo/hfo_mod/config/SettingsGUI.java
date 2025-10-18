@@ -61,6 +61,14 @@ public class SettingsGUI
                 .build()
         );
 
+        general.addEntry(entryBuilder
+                .startBooleanToggle(Text.translatable("config.hardcore_fluid_overhaul.sourceFluidPickupDisabled"), settingsCommon.sourceFluidPickupDisabled)
+                .setDefaultValue(true)
+                .setSaveConsumer(newValue -> settingsCommon.sourceFluidPickupDisabled = newValue)
+                .setTooltip(Text.translatable("config.hardcore_fluid_overhaul.tooltip.sourceFluidPickupDisabled"))
+                .build()
+        );
+
         return builder.build();
     }
 

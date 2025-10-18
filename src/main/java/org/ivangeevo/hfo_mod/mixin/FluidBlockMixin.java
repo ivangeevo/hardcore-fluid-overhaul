@@ -4,9 +4,12 @@ package org.ivangeevo.hfo_mod.mixin;
 import net.minecraft.block.*;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.FlowableFluid;
+import net.minecraft.fluid.Fluids;
 import net.minecraft.item.ItemStack;
+import net.minecraft.state.property.IntProperty;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.WorldAccess;
+import org.ivangeevo.hfo_mod.HFOMod;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -26,15 +29,13 @@ public abstract class FluidBlockMixin extends Block
     @Inject(method = "tryDrainFluid", at = @At("HEAD"), cancellable = true)
     private void onTryDrainFluid(PlayerEntity player, WorldAccess world, BlockPos pos, BlockState state, CallbackInfoReturnable<ItemStack> cir)
     {
-
+        if (!HFOMod.getInstance().settings.isSourceFluidPickupDisabled()) return;
         if (player != null) {
-            if (player.isCreative()) {
-                return;
-            }
-        } else {
-            world.setBlockState(pos, Blocks.AIR.getDefaultState(), Block.NOTIFY_ALL_AND_REDRAW);
+            if (player.isCreative()) return;
+            cir.setReturnValue(new ItemStack(this.fluid.getBucketItem()));
         }
 
-        cir.setReturnValue(new ItemStack(this.fluid.getBucketItem()));
     }
+
 }
+

@@ -1,7 +1,9 @@
 {
   "config.hardcore_fluid_overhaul.category.general": "General Options",
   "config.hardcore_fluid_overhaul.lavaPickupDisabled": "Disable Lava Pickup",
+  "config.hardcore_fluid_overhaul.sourceFluidPickupDisabled": "Disable Source Fluids Pickup",
   "config.hardcore_fluid_overhaul.tooltip.lavaPickupDisabled": "Toggles whether picking up lava is disabled",
+  "config.hardcore_fluid_overhaul.tooltip.sourceFluidPickupDisabled": "Toggles whether source fluid blocks pickup is disabled",
   "config.hardcore_fluid_overhaul.tooltip.waterFromIceDissipating": "Toggles whether ice blocks break to dissipating water",
   "config.hardcore_fluid_overhaul.tooltip.waterPersistentInEnd": "Toggles whether water in the end will persist when placed",
   "config.hardcore_fluid_overhaul.tooltip.waterloggedBlocksDissipate": "Toggles whether waterlogged blocks dissipate when broken",
