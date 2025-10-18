@@ -1,4 +1,4 @@
-package org.ivangeevo.hardcorefluidoverhaul.mixin;
+package org.ivangeevo.hfo_mod.mixin;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -8,7 +8,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import org.ivangeevo.hardcorefluidoverhaul.util.MiscUtils;
+import org.ivangeevo.hfo_mod.util.MiscUtils;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
@@ -29,17 +29,12 @@ public abstract class BlockMixin
     }
 
     @Unique
-    public void handleCustomWaterlogging(World world, BlockPos pos, BlockState state, PlayerEntity player)
-    {
-        if ( state.contains(WATERLOGGED) && state.get(WATERLOGGED) && !world.isClient )
-        {
+    public void handleCustomWaterlogging(World world, BlockPos pos, BlockState state, PlayerEntity player) {
+        if (state.contains(WATERLOGGED) && state.get(WATERLOGGED) && !world.isClient) {
             world.setBlockState(pos, Blocks.AIR.getDefaultState());
-            if (player.getAbilities().creativeMode)
-            {
+            if (player.getAbilities().creativeMode) {
                 MiscUtils.placeNonPersistentWater(world, pos);
-            }
-            else
-            {
+            } else {
                 MiscUtils.placeNonPersistentWater(world, pos);
             }
         }

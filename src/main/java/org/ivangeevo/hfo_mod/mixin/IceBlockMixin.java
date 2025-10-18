@@ -1,4 +1,4 @@
-package org.ivangeevo.hardcorefluidoverhaul.mixin;
+package org.ivangeevo.hfo_mod.mixin;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.block.IceBlock;
@@ -8,7 +8,7 @@ import net.minecraft.fluid.Fluids;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import org.ivangeevo.hardcorefluidoverhaul.util.MiscUtils;
+import org.ivangeevo.hfo_mod.util.MiscUtils;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;

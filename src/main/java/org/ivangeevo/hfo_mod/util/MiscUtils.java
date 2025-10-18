@@ -1,4 +1,4 @@
-package org.ivangeevo.hardcorefluidoverhaul.util;
+package org.ivangeevo.hfo_mod.util;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;

@@ -1,3 +1,16 @@
+### v1.4(dev)
++ Added configuration options support with Mod Menu and Cloth Config API and added the following options:
+#####  <p>Persistent Water in the End:
+<p>In BTW water in the end can be placed normally, so you can toggle this if you do not want it.
+
+#####  <p>Waterlogging blocks:
+<p>This allows toggling of whether waterlogging blocks is enabled.
+
++ Split client side environment code from the main package
++ Changed the main and client package directories from "hardcorefluidoverhaul" to "hfo_mod"
++ Updated the mod license in the mod to be CC-BY-4.0
++ Updated the mod to Fabric API 0.116.7 & Fabric Loader 0.17.2
+
 ### v1.3.1
 + Reverted a change that allowed to pickup water from flowing water too which caused a bug making it possible to pickup water infinitely
 + Updated the mod to Fabric API 0.115.1 & Fabric Loader 0.16.10

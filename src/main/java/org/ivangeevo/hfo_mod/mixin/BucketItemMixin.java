@@ -1,4 +1,4 @@
-package org.ivangeevo.hardcorefluidoverhaul.mixin;
+package org.ivangeevo.hfo_mod.mixin;
 
 import net.minecraft.advancement.criterion.Criteria;
 import net.minecraft.block.Block;
@@ -26,12 +26,15 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.world.RaycastContext;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
+import net.minecraft.world.dimension.DimensionTypes;
 import net.minecraft.world.event.GameEvent;
-import org.ivangeevo.hardcorefluidoverhaul.util.MiscUtils;
+import org.ivangeevo.hfo_mod.HFOMod;
+import org.ivangeevo.hfo_mod.util.MiscUtils;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
@@ -54,44 +57,34 @@ public abstract class BucketItemMixin extends Item implements FluidModificationI
         }
 
         ItemStack itemStack = user.getStackInHand(hand);
-        // TODO: Keep in mind that the RaycastContext.FluidHandling has been changed from SOURCE_ONLY to ANY
-        //  in order to allow picking up water for flowing water as well. See if this causes any bugs in the future.
         BlockHitResult blockHitResult = BucketItem.raycast(world, user, this.fluid == Fluids.EMPTY
                 ? RaycastContext.FluidHandling.SOURCE_ONLY : RaycastContext.FluidHandling.NONE);
 
-        if (blockHitResult.getType() == HitResult.Type.MISS)
-        {
+        if (blockHitResult.getType() == HitResult.Type.MISS) {
             cir.setReturnValue(TypedActionResult.pass(itemStack));
         }
 
-        if (blockHitResult.getType() == HitResult.Type.BLOCK)
-        {
+        if (blockHitResult.getType() == HitResult.Type.BLOCK) {
             BlockPos blockPos = blockHitResult.getBlockPos();
             Direction direction = blockHitResult.getSide();
             BlockPos blockPos2 = blockPos.offset(direction);
 
-            if (!world.canPlayerModifyAt(user, blockPos) || !user.canPlaceOn(blockPos2, direction, itemStack))
-            {
+            if (!world.canPlayerModifyAt(user, blockPos) || !user.canPlaceOn(blockPos2, direction, itemStack)) {
                 cir.setReturnValue(TypedActionResult.fail(itemStack));
             }
 
-            if (this.fluid == Fluids.EMPTY)
-            {
+            if (this.fluid == Fluids.EMPTY) {
                 BlockState blockState = world.getBlockState(blockPos);
                 FluidState fluidState = blockState.getFluidState();
 
-
-
                 // Check if the block contains flowing water, and return fail if true
-                if (fluidState.isOf(Fluids.FLOWING_WATER))
-                {
+                if (fluidState.isOf(Fluids.FLOWING_WATER)) {
                     cir.setReturnValue(TypedActionResult.fail(itemStack));
                 }
 
 
                 // Check if the block contains flowing lava or lava, and handle accordingly
-                if (fluidState.isOf(Fluids.FLOWING_LAVA) || fluidState.isOf(Fluids.LAVA))
-                {
+                if (fluidState.isOf(Fluids.FLOWING_LAVA) || fluidState.isOf(Fluids.LAVA)) {
                     cir.setReturnValue(TypedActionResult.fail(itemStack));
                     itemStack.decrement(1);
                     user.damage(user.getDamageSources().inFire(), 1.0f); // Using IN_FIRE damage source for lava damage
@@ -100,21 +93,17 @@ public abstract class BucketItemMixin extends Item implements FluidModificationI
                 }
 
                 // Continue with original logic if not flowing water
-                if (blockState.getBlock() instanceof FluidDrainable fluidDrainable)
-                {
-
+                if (blockState.getBlock() instanceof FluidDrainable fluidDrainable) {
 
                     ItemStack drainedStack = fluidDrainable.tryDrainFluid(user, world, blockPos, blockState);
 
-                    if (!drainedStack.isEmpty())
-                    {
+                    if (!drainedStack.isEmpty()) {
                         user.incrementStat(Stats.USED.getOrCreateStat(this));
                         fluidDrainable.getBucketFillSound().ifPresent(sound -> user.playSound(sound, 1.0f, 1.0f));
                         world.emitGameEvent(user, GameEvent.FLUID_PICKUP, blockPos);
                         ItemStack exchangedStack = ItemUsage.exchangeStack(itemStack, user, drainedStack);
 
-                        if (!world.isClient)
-                        {
+                        if (!world.isClient) {
                             Criteria.FILLED_BUCKET.trigger((ServerPlayerEntity) user, drainedStack);
                         }
 
@@ -129,7 +118,9 @@ public abstract class BucketItemMixin extends Item implements FluidModificationI
 
             // Handle placing fluid logic
             BlockState blockState = world.getBlockState(blockPos);
-            BlockPos posToPlace = blockState.getBlock() instanceof FluidFillable && this.fluid == Fluids.WATER ? blockPos : blockPos2;
+            boolean canWaterLog = HFOMod.getInstance().settings.isWaterloggingEnabled();
+            boolean isFluidFillable = blockState.getBlock() instanceof FluidFillable;
+            BlockPos posToPlace = (isFluidFillable && this.fluid == Fluids.WATER) && canWaterLog ? blockPos : blockPos2;
 
             if (this.placeFluid(user, world, posToPlace, blockHitResult)) {
                 this.onEmptied(user, world, itemStack, posToPlace);
@@ -158,20 +149,17 @@ public abstract class BucketItemMixin extends Item implements FluidModificationI
         }
 
         boolean bl2;
-        if (!(this.fluid instanceof FlowableFluid))
-        {
+        if (!(this.fluid instanceof FlowableFluid)) {
             cir.setReturnValue(false);
         }
         BlockState blockState = world.getBlockState(pos);
         Block block = blockState.getBlock();
         boolean bl = blockState.canBucketPlace(this.fluid);
         boolean bl3 = bl2 = blockState.isAir() || bl || block instanceof FluidFillable && ((FluidFillable) block).canFillWithFluid(player, world, pos, blockState, this.fluid);
-        if (!bl2)
-        {
+        if (!bl2) {
             cir.setReturnValue(hitResult != null && this.placeFluid(player, world, hitResult.getBlockPos().offset(hitResult.getSide()), null));
         }
-        if (world.getDimension().ultrawarm() && this.fluid.isIn(FluidTags.WATER))
-        {
+        if (world.getDimension().ultrawarm() && this.fluid.isIn(FluidTags.WATER)) {
             int i = pos.getX();
             int j = pos.getY();
             int k = pos.getZ();
@@ -182,38 +170,58 @@ public abstract class BucketItemMixin extends Item implements FluidModificationI
             cir.setReturnValue(true);
         }
 
-        if (!world.isClient && bl && !blockState.isLiquid())
-        {
+        if (!world.isClient && bl && !blockState.isLiquid()) {
             world.breakBlock(pos, true);
         }
 
-        if (this.fluid == Fluids.WATER)
-        {
-            if ( !(block instanceof FluidFillable) )
-            {
-                MiscUtils.placeNonPersistentWater(world, pos);
-            }
-            else
-            {
-                ((FluidFillable)((Object)block)).tryFillWithFluid(world, pos, blockState, ((FlowableFluid)this.fluid).getStill(false));
-            }
+        if (this.fluid == Fluids.WATER) {
+            tryPlacingOrFillWater(world, pos, blockState, block);
             this.playEmptyingSound(player, world, pos);
             cir.setReturnValue(true);
         }
-        else // Rest of your conditions for other fluids
-        {
-
+        // Rest of the conditions for other fluids
+        else {
             if (world.setBlockState(pos, this.fluid.getDefaultState().getBlockState(),
                     Block.NOTIFY_ALL | Block.REDRAW_ON_MAIN_THREAD) || blockState.getFluidState().isStill()) {
                 this.playEmptyingSound(player, world, pos);
                 cir.setReturnValue(true);
             }
-
         }
 
         cir.setReturnValue(cir.getReturnValue());
     }
 
+    @Unique
+    private void tryPlacingOrFillWater(World world, BlockPos pos, BlockState state, Block block) {
+        if (world.getDimensionEntry().matchesKey(DimensionTypes.THE_END)) {
+            if (!(block instanceof FluidFillable)) {
+                if (HFOMod.getInstance().settings.isPersistentEndWater()) {
+                    if (world.setBlockState(pos, this.fluid.getDefaultState().getBlockState(),
+                            Block.NOTIFY_ALL | Block.REDRAW_ON_MAIN_THREAD)) {
+                        state.getFluidState().isStill();
+                    }
+                } else {
+                    MiscUtils.placeNonPersistentWater(world, pos);
+                }
+            } else {
+                tryFillWithWater(world, pos, state, block);
+            }
 
+        } else {
+            if (!(block instanceof FluidFillable)) {
+                MiscUtils.placeNonPersistentWater(world, pos);
+            } else {
+                ((FluidFillable) block).tryFillWithFluid(world, pos, state, ((FlowableFluid)this.fluid).getStill(false));
+            }
+        }
+    }
+
+    @Unique
+    private void tryFillWithWater(World world, BlockPos pos, BlockState state, Block block) {
+        if (!HFOMod.getInstance().settings.isWaterloggingEnabled()) {
+            return;
+        }
+        ((FluidFillable) block).tryFillWithFluid(world, pos, state, ((FlowableFluid)this.fluid).getStill(false));
+    }
 
 }

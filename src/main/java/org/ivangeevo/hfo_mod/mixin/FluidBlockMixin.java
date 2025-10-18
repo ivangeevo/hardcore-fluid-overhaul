@@ -1,4 +1,4 @@
-package org.ivangeevo.hardcorefluidoverhaul.mixin;
+package org.ivangeevo.hfo_mod.mixin;
 
 
 import net.minecraft.block.*;

@@ -3,12 +3,7 @@
   "minVersion": "0.8",
   "package": "org.ivangeevo.hfo_mod.mixin",
   "compatibilityLevel": "JAVA_17",
-  "mixins": [
-    "BlockMixin",
-    "BucketItemMixin",
-    "FluidBlockMixin",
-    "IceBlockMixin",
-    "accessor.BucketItemAccessor"
+  "client": [
   ],
   "injectors": {
     "defaultRequire": 1
