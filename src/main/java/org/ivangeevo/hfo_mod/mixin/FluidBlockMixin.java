@@ -27,7 +27,7 @@ public abstract class FluidBlockMixin extends Block
     }
 
     @Inject(method = "tryDrainFluid", at = @At("HEAD"), cancellable = true)
-    private void onTryDrainFluid(PlayerEntity player, WorldAccess world, BlockPos pos, BlockState state, CallbackInfoReturnable<ItemStack> cir)
+    private void onTryDrainFluid(WorldAccess world, BlockPos pos, BlockState state, CallbackInfoReturnable<ItemStack> cir)
     {
         if (!HFOMod.getInstance().settings.isSourceFluidPickupDisabled()) return;
         if (player != null) {

@@ -9,13 +9,14 @@ import java.util.concurrent.CompletableFuture;
 
 public class HFOModLangProvider extends FabricLanguageProvider {
 
-    public HFOModLangProvider(FabricDataOutput dataOutput, CompletableFuture<RegistryWrapper.WrapperLookup> registryLookup) {
-        super(dataOutput, registryLookup);
+    public HFOModLangProvider(FabricDataOutput dataOutput) {
+        super(dataOutput);
     }
 
     @Override
-    public void generateTranslations(RegistryWrapper.WrapperLookup registryLookup, TranslationBuilder tb) {
+    public void generateTranslations(TranslationBuilder tb) {
         this.addConfigTranslations(tb);
+
     }
 
     private void addConfigTranslations(TranslationBuilder tb) {
@@ -51,4 +52,6 @@ public class HFOModLangProvider extends FabricLanguageProvider {
     private void addConfigTooltip(String configPath, String translation, TranslationBuilder tb) {
         tb.add("config." + HFOMod.MOD_ID + ".tooltip." + configPath, translation);
     }
+
+
 }
