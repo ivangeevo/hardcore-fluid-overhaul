@@ -198,23 +198,32 @@ public abstract class BucketItemMixin extends Item implements FluidModificationI
         if (world.getDimensionEntry().matchesKey(DimensionTypes.THE_END)) {
             if (!(block instanceof FluidFillable)) {
                 if (HFOMod.getInstance().settings.isWaterPersistentInEnd()) {
-                    if (world.setBlockState(pos, this.fluid.getDefaultState().getBlockState(),
-                            Block.NOTIFY_ALL | Block.REDRAW_ON_MAIN_THREAD)) {
-                        state.getFluidState().isStill();
-                    }
+                    placeNormally(world, pos, state);
                 } else {
                     MiscUtils.placeNonPersistentWater(world, pos);
                 }
             } else {
                 tryFillWithWater(world, pos, state, block);
             }
-
         } else {
             if (!(block instanceof FluidFillable)) {
+                if (HFOMod.getInstance().settings.isWaterPersistentInOverworld()) {
+                    placeNormally(world, pos, state);
+                    return;
+                }
+
                 MiscUtils.placeNonPersistentWater(world, pos);
             } else {
                 ((FluidFillable) block).tryFillWithFluid(world, pos, state, ((FlowableFluid)this.fluid).getStill(false));
             }
+        }
+    }
+
+    @Unique
+    private void placeNormally(World world, BlockPos pos, BlockState state) {
+        if (world.setBlockState(pos, this.fluid.getDefaultState().getBlockState(),
+                Block.NOTIFY_ALL | Block.REDRAW_ON_MAIN_THREAD)) {
+            state.getFluidState().isStill();
         }
     }
 

@@ -30,6 +30,14 @@ public class SettingsGUI
         );
 
         general.addEntry(entryBuilder
+                .startBooleanToggle(Text.translatable("config.hardcore_fluid_overhaul.waterPersistentInOverworld"), settingsCommon.waterPersistentInOverworld)
+                .setDefaultValue(false)
+                .setSaveConsumer(newValue -> settingsCommon.waterPersistentInOverworld = newValue)
+                .setTooltip(Text.translatable("config.hardcore_fluid_overhaul.tooltip.waterPersistentInOverworld"))
+                .build()
+        );
+
+        general.addEntry(entryBuilder
                 .startBooleanToggle(Text.translatable("config.hardcore_fluid_overhaul.waterPersistentInEnd"), settingsCommon.waterPersistentInEnd)
                 .setDefaultValue(true)
                 .setSaveConsumer(newValue -> settingsCommon.waterPersistentInEnd = newValue)
