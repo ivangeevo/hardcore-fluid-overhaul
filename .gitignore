@@ -119,5 +119,5 @@ run/
 !gradle-wrapper.jar
 
 # Exclude datagen cache
-./src/main/generated/.cache
+src/main/generated/.cache
 
