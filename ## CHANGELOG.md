@@ -1,3 +1,8 @@
+### v1.5(dev)
++ Added BTWR: Shared Library as dependency.
++ Added a new configuration option for whether placing a water bucket would place normal or dissipating water
++ Updated the mod to Fabric API 0.116.17 & Fabric Loader 0.19.5
+
 ### v1.4
 + Added configuration options support with Mod Menu and Cloth Config API and added the following options:
 
