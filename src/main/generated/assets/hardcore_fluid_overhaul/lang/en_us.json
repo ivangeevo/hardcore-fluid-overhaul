@@ -1,18 +1,8 @@
 {
   "config.hardcore_fluid_overhaul.category.general": "General Options",
-  "config.hardcore_fluid_overhaul.lavaPickupDisabled": "Disable Lava Pickup",
-  "config.hardcore_fluid_overhaul.sourceFluidPickupDisabled": "Disable Source Fluids Pickup",
-  "config.hardcore_fluid_overhaul.tooltip.lavaPickupDisabled": "Toggles whether picking up lava is disabled",
-  "config.hardcore_fluid_overhaul.tooltip.sourceFluidPickupDisabled": "Toggles whether source fluid blocks pickup is disabled",
-  "config.hardcore_fluid_overhaul.tooltip.waterFromIceDissipating": "Toggles whether ice blocks break to dissipating water",
-  "config.hardcore_fluid_overhaul.tooltip.waterPersistentInEnd": "Toggles whether water in The End will persist when placed",
-  "config.hardcore_fluid_overhaul.tooltip.waterPersistentInOverworld": "Toggles whether water in The Overworld will persist when placed",
-  "config.hardcore_fluid_overhaul.tooltip.waterloggedBlocksDissipate": "Toggles whether waterlogged blocks dissipate when broken",
-  "config.hardcore_fluid_overhaul.tooltip.waterloggingEnabled": "Toggles whether blocks can be waterlogged",
-  "config.hardcore_fluid_overhaul.waterFromIceDissipating": "Dissipating Ice Blocks",
-  "config.hardcore_fluid_overhaul.waterPersistentInEnd": "Persistent End Water",
-  "config.hardcore_fluid_overhaul.waterPersistentInOverworld": "Persistent Overworld Water",
-  "config.hardcore_fluid_overhaul.waterloggedBlocksDissipate": "Waterlogged Blocks Dissipate",
-  "config.hardcore_fluid_overhaul.waterloggingEnabled": "Enable Waterlogging",
+  "config.hardcore_fluid_overhaul.text.clientSettingsText": "Client Settings:",
+  "config.hardcore_fluid_overhaul.text.emptyClientConfigText": "§eNote:§r There are currently no client config settings.",
+  "config.hardcore_fluid_overhaul.text.serverSettingsNoAccessText": "§eNote:§r Server settings are not accessible in menus.\nThey can only be changed by editing the config file manually and require a world reload to take effect.",
+  "config.hardcore_fluid_overhaul.text.serverSettingsText": "Server Settings:",
   "title.hardcore_fluid_overhaul.config": "Hardcore Fluid Overhaul Configuration Menu"
 }

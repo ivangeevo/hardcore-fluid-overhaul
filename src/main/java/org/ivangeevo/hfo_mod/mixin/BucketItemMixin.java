@@ -29,6 +29,7 @@ import net.minecraft.world.WorldAccess;
 import net.minecraft.world.dimension.DimensionTypes;
 import net.minecraft.world.event.GameEvent;
 import org.ivangeevo.hfo_mod.HFOMod;
+import org.ivangeevo.hfo_mod.config.HFOModConfig;
 import org.ivangeevo.hfo_mod.util.MiscUtils;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Final;
@@ -85,7 +86,7 @@ public abstract class BucketItemMixin extends Item implements FluidModificationI
 
                 // Check if the block contains flowing lava or lava, and handle accordingly
                 if (fluidState.isOf(Fluids.FLOWING_LAVA) || fluidState.isOf(Fluids.LAVA)) {
-                    if (HFOMod.getInstance().settings.isLavaPickupDisabled()) {
+                    if (HFOModConfig.lavaPickupDisabled.get()) {
                         cir.setReturnValue(TypedActionResult.fail(itemStack));
                         itemStack.decrement(1);
                         user.damage(user.getDamageSources().inFire(), 1.0f); // Using IN_FIRE damage source for lava damage
@@ -120,7 +121,7 @@ public abstract class BucketItemMixin extends Item implements FluidModificationI
 
             // Handle placing fluid logic
             BlockState blockState = world.getBlockState(blockPos);
-            boolean canWaterLog = HFOMod.getInstance().settings.isWaterloggingEnabled();
+            boolean canWaterLog = HFOModConfig.waterloggingEnabled.get();
             boolean isFluidFillable = blockState.getBlock() instanceof FluidFillable;
             BlockPos posToPlace = (isFluidFillable && this.fluid == Fluids.WATER) && canWaterLog ? blockPos : blockPos2;
 
@@ -197,7 +198,7 @@ public abstract class BucketItemMixin extends Item implements FluidModificationI
     private void tryPlacingOrFillWater(World world, BlockPos pos, BlockState state, Block block) {
         if (world.getDimensionEntry().matchesKey(DimensionTypes.THE_END)) {
             if (!(block instanceof FluidFillable)) {
-                if (HFOMod.getInstance().settings.isWaterPersistentInEnd()) {
+                if (HFOModConfig.waterPersistentInEnd.get()) {
                     placeNormally(world, pos, state);
                 } else {
                     MiscUtils.placeNonPersistentWater(world, pos);
@@ -207,7 +208,7 @@ public abstract class BucketItemMixin extends Item implements FluidModificationI
             }
         } else {
             if (!(block instanceof FluidFillable)) {
-                if (HFOMod.getInstance().settings.isWaterPersistentInOverworld()) {
+                if (HFOModConfig.waterPersistentInOverworld.get()) {
                     placeNormally(world, pos, state);
                     return;
                 }
@@ -229,7 +230,7 @@ public abstract class BucketItemMixin extends Item implements FluidModificationI
 
     @Unique
     private void tryFillWithWater(World world, BlockPos pos, BlockState state, Block block) {
-        if (!HFOMod.getInstance().settings.isWaterloggingEnabled()) {
+        if (!HFOModConfig.waterloggingEnabled.get()) {
             return;
         }
         ((FluidFillable) block).tryFillWithFluid(world, pos, state, ((FlowableFluid)this.fluid).getStill(false));

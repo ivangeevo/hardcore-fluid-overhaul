@@ -9,6 +9,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import org.ivangeevo.hfo_mod.HFOMod;
+import org.ivangeevo.hfo_mod.config.HFOModConfig;
 import org.ivangeevo.hfo_mod.util.MiscUtils;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
@@ -30,7 +31,7 @@ public abstract class IceBlockMixin
         BlockState blockState = world.getBlockState(pos.down());
 
         if (blockState.blocksMovement() || blockState.isLiquid()) {
-            if (HFOMod.getInstance().settings.isWaterFromIceDissipating()) {
+            if (HFOModConfig.waterPersistentInOverworld.get()) {
                 world.setBlockState(pos, regularFlowingState);
                 MiscUtils.placeNonPersistentWater(world, pos);
             } else {

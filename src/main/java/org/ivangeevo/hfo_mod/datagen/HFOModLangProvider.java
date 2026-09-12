@@ -19,22 +19,18 @@ public class HFOModLangProvider extends FabricLanguageProvider {
     }
 
     private void addConfigTranslations(TranslationBuilder tb) {
+        addConfigMenuDefaults(tb);
         addConfigMenuTitle("Hardcore Fluid Overhaul Configuration Menu", tb);
         addConfigCategory("general", "General Options", tb);
-        addConfig("waterloggingEnabled", "Enable Waterlogging", tb);
-        addConfigTooltip("waterloggingEnabled", "Toggles whether blocks can be waterlogged", tb);
-        addConfig("waterloggedBlocksDissipate", "Waterlogged Blocks Dissipate", tb);
-        addConfigTooltip("waterloggedBlocksDissipate", "Toggles whether waterlogged blocks dissipate when broken", tb);
-        addConfig("waterFromIceDissipating", "Dissipating Ice Blocks", tb);
-        addConfigTooltip("waterFromIceDissipating", "Toggles whether ice blocks break to dissipating water", tb);
-        addConfig("waterPersistentInOverworld", "Persistent Overworld Water", tb);
-        addConfigTooltip("waterPersistentInOverworld", "Toggles whether water in The Overworld will persist when placed", tb);
-        addConfig("waterPersistentInEnd", "Persistent End Water", tb);
-        addConfigTooltip("waterPersistentInEnd", "Toggles whether water in The End will persist when placed", tb);
-        addConfig("lavaPickupDisabled", "Disable Lava Pickup", tb);
-        addConfigTooltip("lavaPickupDisabled", "Toggles whether picking up lava is disabled", tb);
-        addConfig("sourceFluidPickupDisabled", "Disable Source Fluids Pickup", tb);
-        addConfigTooltip("sourceFluidPickupDisabled", "Toggles whether source fluid blocks pickup is disabled", tb);
+    }
+
+    private void addConfigMenuDefaults(TranslationBuilder tb) {
+        this.addSimpleText("clientSettingsText", "Client Settings:", tb);
+        this.addSimpleText("emptyClientConfigText", "§eNote:§r There are currently no client config settings.", tb);
+        this.addSimpleText("serverSettingsText", "Server Settings:", tb);
+        this.addSimpleText("serverSettingsNoAccessText", "§eNote:§r Server settings are not accessible in menus." +
+                "\nThey can only be changed by editing the config file manually and require a world reload to take effect.", tb
+        );
     }
 
     private void addConfigMenuTitle(String translation, TranslationBuilder tb) {
@@ -52,4 +48,13 @@ public class HFOModLangProvider extends FabricLanguageProvider {
     private void addConfigTooltip(String configPath, String translation, TranslationBuilder tb) {
         tb.add("config." + HFOMod.MOD_ID + ".tooltip." + configPath, translation);
     }
+
+    private void addSimpleText(String path, String translation, TranslationBuilder tb) {
+        tb.add(configBasePath() + "text." + path, translation);
+    }
+
+    private String configBasePath() {
+        return "config." + HFOMod.MOD_ID + ".";
+    }
+
 }

@@ -8,7 +8,7 @@ public class HFOModMenu implements ModMenuApi
 
     @Override
     public ConfigScreenFactory<?> getModConfigScreenFactory() {
-        return SettingsGUI::createConfigScreen;
+        return HFOModClientConfig::createConfigScreen;
     }
 
 }
